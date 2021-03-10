@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.fragmentos.Comunicacion
 import com.example.fragmentos.R
@@ -17,10 +18,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
+ * Use the [Recetas.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Login : Fragment() {
+class Recetas : Fragment() {
+    var txtRcb:String?=""
     private lateinit var comunicacion: Comunicacion
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -38,16 +40,33 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val vista = inflater.inflate(R.layout.fragment_login, container, false)
+        val vista = inflater.inflate(R.layout.fragment_recetas, container, false)
         this.comunicacion = activity as Comunicacion
+        txtRcb = arguments?.getString("nombre")
+        val nombre =  vista.findViewById<TextView>(R.id.nombre)
+        nombre.text = nombre.text.toString() + txtRcb
+        var btnSalir: Button = vista.findViewById(R.id.salir_recetas)
+        var imgComda: ImageView = vista.findViewById(R.id.comida_receta)
+        var imgPostre: ImageView = vista.findViewById(R.id.postre_receta)
+        var imgBebida: ImageView = vista.findViewById(R.id.bebida_receta)
 
-        val login: Button = vista.findViewById<Button>(R.id.login)
-        val nombre: TextView = vista.findViewById(R.id.user)
-
-        login.setOnClickListener{
-            comunicacion.enviarDatos(nombre.text.toString())
+        imgComda.setOnClickListener {
+            comunicacion.Comida("Hola")
         }
+
+        imgPostre.setOnClickListener {
+            comunicacion.Postre("Hola")
+        }
+
+        imgBebida.setOnClickListener {
+            comunicacion.Bebida("Hola")
+        }
+
+        btnSalir.setOnClickListener {
+            comunicacion.salir()
+        }
+
+
         // Inflate the layout for this fragment
         return vista
     }
@@ -59,12 +78,12 @@ class Login : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Login.
+         * @return A new instance of fragment Recetas.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Login().apply {
+            Recetas().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -17,12 +17,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Login.newInstance] factory method to
+ * Use the [Comida.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Login : Fragment() {
-    private lateinit var comunicacion: Comunicacion
+class Comida : Fragment() {
     // TODO: Rename and change types of parameters
+    var txtRcb:String?=""
+    private lateinit var comunicacion: Comunicacion
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -38,17 +40,17 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val vista = inflater.inflate(R.layout.fragment_login, container, false)
+        val vista =  inflater.inflate(R.layout.fragment_comida, container, false)
         this.comunicacion = activity as Comunicacion
+        txtRcb = arguments?.getString("nombre")
+        println("Hola")
+        val nombre =  vista.findViewById<TextView>(R.id.comida_user)
+        nombre.text = nombre.text.toString() + txtRcb
 
-        val login: Button = vista.findViewById<Button>(R.id.login)
-        val nombre: TextView = vista.findViewById(R.id.user)
-
-        login.setOnClickListener{
-            comunicacion.enviarDatos(nombre.text.toString())
+        var salir: Button = vista.findViewById(R.id.comida_salir)
+        salir.setOnClickListener {
+            comunicacion.salir()
         }
-        // Inflate the layout for this fragment
         return vista
     }
 
@@ -59,12 +61,12 @@ class Login : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Login.
+         * @return A new instance of fragment Comida.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Login().apply {
+            Comida().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
